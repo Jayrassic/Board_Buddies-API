@@ -1,10 +1,16 @@
-const Game = require("../models/game");
+const Game = require("../models/games");
 
-// eturns all games
+// Returns all games
 exports.allGames = async (req, res, next) => {
+  //   try {
+  //     const data = await Game.find().populate("user", "userName").exec();
+  //     res.json(data);
+  //   } catch (err) {
+  //     res.send(err);
+  //   }
+
   try {
-    const data = await Game.find().populate("user", "userName").exec();
-    res.json(data);
+    res.send("All Games");
   } catch (err) {
     res.send(err);
   }
