@@ -3,17 +3,17 @@ const User = require("../models/users");
 // Sign Up User
 exports.signupUser = async (req, res, next) => {
   try {
-    req.send("Sign Up User");
+    res.send("Sign Up User");
   } catch (err) {
-    req.send(err);
+    res.send(err);
   }
 };
 
 // Login user
 exports.loginUser = async (req, res, next) => {
   try {
-    req.send("login User");
+    res.send("Login User");
   } catch (err) {
-    req.send(err);
+    res.send(err);
   }
 };
