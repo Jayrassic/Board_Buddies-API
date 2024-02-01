@@ -11,9 +11,9 @@ router.get("/", gameController.allGames);
 router.get("/:user", requireAuth, gameController.userGames);
 
 // Add game to list
-router.post("/", gameController.addGame);
+router.post("/", requireAuth, gameController.addGame);
 
 // Delete game from List
-router.delete("/", gameController.deleteGame);
+router.delete("/", requireAuth, gameController.deleteGame);
 
 module.exports = router;
