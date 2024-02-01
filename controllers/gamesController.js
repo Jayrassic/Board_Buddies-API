@@ -1,4 +1,5 @@
 const Game = require("../models/games");
+const User = require("../models/users");
 
 // Returns all games
 exports.allGames = async (req, res, next) => {
@@ -30,19 +31,48 @@ exports.userGames = async (req, res, next) => {
 
 // Adds game to all game list
 exports.addGame = async (req, res, next) => {
-  try {
-    console.log(req.user);
-    res.send("Game Added");
-  } catch (err) {
-    res.send(err);
+  const userInfo = req.user;
+  const gameData = req.body.data;
+
+  if (!gameData) {
+    res.send("No Game Data");
+  }
+
+  const match = await Game.findOne({
+    owner: userInfo._id,
+    name: gameData.name,
+  });
+
+  if (!match) {
+    try {
+      const newGame = await Game.create({ owner: userInfo._id, ...gameData });
+      res.status(200).json(newGame);
+    } catch (err) {
+      console.log(err);
+      res.status(400).json({ Error: err });
+    }
+  } else {
+    res.status(400).send("Game already in library");
   }
 };
 
 // Deletes game from all game list
 exports.deleteGame = async (req, res, next) => {
-  try {
-    res.send("Delete Game");
-  } catch (err) {
-    res.send(err);
+  const userInfo = req.user;
+  const gameData = req.body.data;
+
+  if (!gameData) {
+    res.send("No Game Data");
   }
+
+  const deletedGame = await Game.findOneAndDelete({
+    owner: userInfo._id,
+    name: gameData.name,
+  });
+
+  if (!deletedGame) {
+    return res.status(400).json({ Error: "Game is not in library" });
+  }
+
+  res.status(200).json(deletedGame);
 };
