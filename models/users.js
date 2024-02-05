@@ -12,7 +12,6 @@ const userSchema = new Schema({
 });
 
 userSchema.statics.login = async function (email, password) {
-  console.log({ email, password });
   if (!email || !password) {
     throw Error("All fields must be filled in.");
   }
@@ -39,10 +38,6 @@ userSchema.statics.signUp = async function (email, password, userName) {
   if (!validator.isEmail(email)) {
     throw Error("Please provide a valid email address");
   }
-
-  // if (!validator.isStrongPassword(password)) {
-  //   throw Error("Password id not strong enough");
-  // }
 
   const emailExist = await this.findOne({ email });
   const userExist = await this.findOne({ userName });
