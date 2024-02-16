@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
+const cors = require("cors");
 require("dotenv").config();
 
 const indexRouter = require("./routes/index");
@@ -18,6 +19,8 @@ async function main() {
   await mongoose.connect(process.env.DB_KEY);
   console.log("Connected to database");
 }
+// !!!!!!!!!!!!!!!!! REMOVE ON PRODUCTION
+app.use(cors());
 
 app.use(logger("dev"));
 app.use(express.json());
