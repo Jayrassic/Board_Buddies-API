@@ -32,7 +32,7 @@ exports.userGames = async (req, res, next) => {
 // Adds game to all game list
 exports.addGame = async (req, res, next) => {
   const userInfo = req.user;
-  const gameData = req.body.data;
+  const gameData = req.body;
 
   if (!gameData) {
     res.send("No Game Data");
@@ -52,7 +52,7 @@ exports.addGame = async (req, res, next) => {
       res.status(400).json({ Error: err });
     }
   } else {
-    res.status(400).send("Game already in library");
+    res.status(400).json({ error: "Game already in library" });
   }
 };
 
