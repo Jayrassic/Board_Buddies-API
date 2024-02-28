@@ -20,12 +20,17 @@ exports.userGames = async (req, res, next) => {
   if (userID === tokenInfo.userName) {
     try {
       const usersGames = await Game.find({ owner: tokenInfo._id });
+      if (usersGames.length === 0) {
+        throw new Error("No Games");
+      }
       res.status(200).json(usersGames);
     } catch (err) {
-      res.status(404).send("No Games Found");
+      res.status(404).send({ message: "No Games found" });
     }
   } else {
-    res.status(401).send("You are not authorized to view this info");
+    res
+      .status(401)
+      .send({ message: "You are not authorized to view this info" });
   }
 };
 
@@ -59,7 +64,9 @@ exports.addGame = async (req, res, next) => {
 // Deletes game from all game list
 exports.deleteGame = async (req, res, next) => {
   const userInfo = req.user;
-  const gameData = req.body.data;
+  const gameData = req.body;
+
+  console.log(gameData);
 
   if (!gameData) {
     res.send("No Game Data");
