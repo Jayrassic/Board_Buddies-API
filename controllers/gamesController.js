@@ -25,7 +25,7 @@ exports.userGames = async (req, res, next) => {
       }
       res.status(200).json(usersGames);
     } catch (err) {
-      res.status(404).send({ message: "No Games found" });
+      res.status(404).send({ message: "No Games Found" });
     }
   } else {
     res
