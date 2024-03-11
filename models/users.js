@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
-const validator = require("validator");
 
 const Schema = mongoose.Schema;
 
@@ -18,13 +17,13 @@ userSchema.statics.login = async function (email, password) {
   const user = await this.findOne({ email });
 
   if (!user) {
-    throw Error("Incorrect email");
+    throw Error("Email not found.");
   }
 
   const match = await bcrypt.compare(password, user.hash);
 
   if (!match) {
-    throw Error("Incorrect Password");
+    throw Error("Incorrect Password.");
   }
 
   return user;
@@ -32,18 +31,18 @@ userSchema.statics.login = async function (email, password) {
 
 userSchema.statics.signUp = async function (email, password, userName) {
   if (!email || !userName || !password) {
-    throw Error("All fields must be filled in");
-  }
-
-  if (!validator.isEmail(email)) {
-    throw Error("Please provide a valid email address");
+    throw Error("All fields must be filled in.");
   }
 
   const emailExist = await this.findOne({ email });
   const userExist = await this.findOne({ userName });
 
-  if (emailExist || userExist) {
-    throw Error("Email already in use");
+  if (emailExist) {
+    throw Error("Email is already in use.");
+  }
+
+  if (userExist) {
+    throw Error("User name is already in use.");
   }
 
   const salt = await bcrypt.genSalt(10);
