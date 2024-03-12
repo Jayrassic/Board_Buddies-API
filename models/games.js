@@ -7,8 +7,10 @@ const gameSchema = new Schema({
   description: { type: String, require: true },
   minPlayers: { type: Number, require: true },
   maxPlayers: { type: Number, require: true },
+  playingTime: { type: Number, require: true },
   image: { type: String, require: true },
   thumbnail: { type: String, require: true },
+  dateAdded: { type: Date, require: true },
 });
 
 module.exports = mongoose.model("Game", gameSchema);
