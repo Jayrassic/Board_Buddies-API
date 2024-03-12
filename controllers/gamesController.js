@@ -1,5 +1,4 @@
 const Game = require("../models/games");
-const User = require("../models/users");
 
 // Returns all games
 exports.allGames = async (req, res, next) => {
