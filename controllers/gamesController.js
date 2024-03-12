@@ -25,12 +25,12 @@ exports.userGames = async (req, res, next) => {
       }
       res.status(200).json(usersGames);
     } catch (err) {
-      res.status(404).send({ message: "No Games Found" });
+      res.status(404).send({ error: "No Games Found" });
     }
   } else {
     res
       .status(401)
-      .send({ message: "You are not authorized to view this info" });
+      .send({ error: "You are not authorized to view this page." });
   }
 };
 
@@ -54,7 +54,7 @@ exports.addGame = async (req, res, next) => {
       res.status(200).json(newGame);
     } catch (err) {
       console.log(err);
-      res.status(400).json({ Error: err });
+      res.status(400).json({ error: err });
     }
   } else {
     res.status(400).json({ error: "Game already in library" });
@@ -69,7 +69,7 @@ exports.deleteGame = async (req, res, next) => {
   console.log(gameData);
 
   if (!gameData) {
-    res.send("No Game Data");
+    res.status(404).send("No Game Data");
   }
 
   const deletedGame = await Game.findOneAndDelete({
@@ -78,7 +78,7 @@ exports.deleteGame = async (req, res, next) => {
   });
 
   if (!deletedGame) {
-    return res.status(400).json({ Error: "Game is not in library" });
+    return res.status(400).json({ error: "Game is not in library" });
   }
 
   res.status(200).json(deletedGame);
