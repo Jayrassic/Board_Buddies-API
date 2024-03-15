@@ -3,7 +3,10 @@ const Game = require("../models/games");
 // Returns all games
 exports.allGames = async (req, res, next) => {
   try {
-    const data = await Game.find().populate("owner", "userName").exec();
+    const data = await Game.find()
+      .populate("owner", "userName")
+      .sort({ dateAdded: -1 })
+      .exec();
     res.json(data);
   } catch (err) {
     res.send(err);
@@ -18,7 +21,10 @@ exports.userGames = async (req, res, next) => {
 
   if (userID === tokenInfo.userName) {
     try {
-      const usersGames = await Game.find({ owner: tokenInfo._id });
+      const usersGames = await Game.find({ owner: tokenInfo._id })
+        .populate("owner", "userName")
+        .sort({ dateAdded: -1 })
+        .exec();
       if (usersGames.length === 0) {
         throw new Error("No Games");
       }
