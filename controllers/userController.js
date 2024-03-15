@@ -12,7 +12,7 @@ const createToken = (_id, userName) => {
 exports.signupUser = [
   body("userName")
     .trim()
-    .isLength({ min: 2, max: 10 })
+    .isLength({ min: 2, max: 15 })
     .escape()
     .withMessage("User Name must be between 2 and 10 characters long."),
   body("password")
