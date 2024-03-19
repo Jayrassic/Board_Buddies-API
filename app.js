@@ -20,7 +20,11 @@ async function main() {
   console.log("Connected to database");
 }
 // !!!!!!!!!!!!!!!!! Add production server
-var whitelist = ["http://localhost:5173"];
+var whitelist = [
+  "http://localhost:5173",
+  "http://localhost:4173",
+  "https://boardbuddies.netlify.app/",
+];
 var corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
