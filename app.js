@@ -23,7 +23,7 @@ async function main() {
 var whitelist = [
   "http://localhost:5173",
   "http://localhost:4173",
-  "https://boardbuddies.netlify.app/",
+  "https://boardbuddies.netlify.app",
 ];
 var corsOptions = {
   origin: function (origin, callback) {
