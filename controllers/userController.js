@@ -30,6 +30,7 @@ exports.signupUser = [
   body("email")
     .trim()
     .escape()
+    .toLowerCase()
     .isEmail()
     .withMessage("Please enter a valid email address."),
 
@@ -40,7 +41,6 @@ exports.signupUser = [
 
     if (!errors.isEmpty()) {
       const cleanErrors = errors.errors.map((error) => error.msg);
-      console.log(cleanErrors);
       res.status(400).json({ error: cleanErrors });
     } else {
       try {
@@ -62,6 +62,7 @@ exports.loginUser = [
   body("email")
     .trim()
     .escape()
+    .toLowerCase()
     .isEmail()
     .withMessage("Please enter a valid email address."),
 
@@ -72,7 +73,6 @@ exports.loginUser = [
 
     if (!errors.isEmpty()) {
       const cleanErrors = errors.errors.map((error) => error.msg);
-      console.log(cleanErrors);
       res.status(400).json({ error: cleanErrors });
     } else {
       try {
